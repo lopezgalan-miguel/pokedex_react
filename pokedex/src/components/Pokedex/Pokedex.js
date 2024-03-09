@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import Pokescreen from '../Pokescreen/Pokescreen'
 
+
+
 export function Pokedex() {
 
    const [error, setError] = useState(false);
@@ -17,7 +19,6 @@ export function Pokedex() {
       .then(data => {
          // Si todo esta cool, actualizamos el pokemón
          // Y le indicamos que no hay error
-         console.log(data)
          setPokemon(data)
          setLoading(false)
          setError(false)
@@ -31,14 +32,17 @@ export function Pokedex() {
       <div className="pokedex">
       <div className="pokedex-left">
         <div className="pokedex-left-top">
-          <div className='light is-sky is-big'/>
-          <div className="light is-red" />
-          <div className="light is-yellow" />
-          <div className="light is-green" />
+            <div className={`light is-sky is-big ${loading && 'is-animated'}`}  />
+            <div className="light is-red" />
+            <div className="light is-yellow" />
+            <div className="light is-green" />
         </div>
         <div className="pokedex-screen-container">
-          Set Pokedex Screen{/* <PokedexScreen /> */}
-          <Pokescreen />
+          <Pokescreen
+               pokemon={pokemon}
+               loading={loading}
+               error={error}
+            />
         </div>
         <div className="pokedex-left-bottom">
           <div className="pokedex-left-bottom-lights">
