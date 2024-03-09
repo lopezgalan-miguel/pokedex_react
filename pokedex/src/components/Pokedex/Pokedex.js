@@ -17,7 +17,6 @@ export function Pokedex() {
       .then(data => {
          // Si todo esta cool, actualizamos el pokemón
          // Y le indicamos que no hay error
-         console.log(data)
          setPokemon(data)
          setLoading(false)
          setError(false)
@@ -37,8 +36,11 @@ export function Pokedex() {
           <div className="light is-green" />
         </div>
         <div className="pokedex-screen-container">
-          Set Pokedex Screen{/* <PokedexScreen /> */}
-          <Pokescreen />
+          <Pokescreen
+               pokemon={pokemon}
+               loading={loading}
+               error={error}
+            />
         </div>
         <div className="pokedex-left-bottom">
           <div className="pokedex-left-bottom-lights">
