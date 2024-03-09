@@ -2,6 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './Pokescreen.module.scss';
 
+function Stat({ item }){
+  return (
+    <li className="pokemon-stat">
+      <span className="stat-name"><b>{item.stat.name}: </b></span>
+      <span>{item.base_stat}</span>
+    </li>
+  )
+}
+
 const Pokescreen = ({ pokemon, loading, error }) => (
   <div className="pokedex-screen">
       <div className="pokemon-info">
@@ -12,7 +21,11 @@ const Pokescreen = ({ pokemon, loading, error }) => (
           alt={pokemon.name}
         />
         <ul className="pokemon-stats">
-          // Aquí iteraremos sobre la lista de estadísticas
+        <ul className="pokemon-stats">
+          { pokemon.stats.map(item => (
+            <Stat key={item.stat.name} item={item}/>
+          ))}
+        </ul>
         </ul>
       </div>
     </div>
