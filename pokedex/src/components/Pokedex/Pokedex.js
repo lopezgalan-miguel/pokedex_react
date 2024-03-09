@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import Pokescreen from '../Pokescreen/Pokescreen'
 
+
+
 export function Pokedex() {
 
    const [error, setError] = useState(false);
@@ -30,10 +32,10 @@ export function Pokedex() {
       <div className="pokedex">
       <div className="pokedex-left">
         <div className="pokedex-left-top">
-          <div className='light is-sky is-big'/>
-          <div className="light is-red" />
-          <div className="light is-yellow" />
-          <div className="light is-green" />
+            <div className={`light is-sky is-big ${loading && 'is-animated'}`}  />
+            <div className="light is-red" />
+            <div className="light is-yellow" />
+            <div className="light is-green" />
         </div>
         <div className="pokedex-screen-container">
           <Pokescreen

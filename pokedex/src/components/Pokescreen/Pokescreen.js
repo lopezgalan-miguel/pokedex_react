@@ -11,25 +11,39 @@ function Stat({ item }){
   )
 }
 
-const Pokescreen = ({ pokemon, loading, error }) => (
-  <div className="pokedex-screen">
+const Pokescreen = ({ pokemon, loading, error }) => {
+  if(error) { //TODO: Create error component missigno image
+    return(
+      <div>
+        Error, intentelo de nuevo
+      </div>
+    )
+  }
+  if(loading) { //Error: Create loading component teletexto image
+    return(
+      <div> Cargando ...</div>
+    )
+  }
+  return(
+      <div className="pokedex-screen">
       <div className="pokemon-info">
-        <h2 className="pokemon-name">{pokemon.name}</h2>
+        <h2 className="pokemon-name">{pokemon?.name}</h2>
         <img
           className="pokemon-img"
-          src={pokemon.sprites.front_default}
-          alt={pokemon.name}
+          src={pokemon?.sprites.front_default}
+          alt={pokemon?.name}
         />
         <ul className="pokemon-stats">
         <ul className="pokemon-stats">
-          { pokemon.stats.map(item => (
+          { pokemon?.stats.map(item => (
             <Stat key={item.stat.name} item={item}/>
           ))}
         </ul>
         </ul>
       </div>
     </div>
-);
+  )
+};
 
 Pokescreen.propTypes = {};
 
