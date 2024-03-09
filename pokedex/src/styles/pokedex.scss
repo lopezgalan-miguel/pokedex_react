@@ -331,11 +331,11 @@ ul{
 }
 
 .pokemon-input:focus::-webkit-input-placeholder{
-  color: rgba(255,255,255, 1);
+  color: rgb(0, 0, 0);
 
 }
 .pokemon-input::-webkit-input-placeholder {
-  color: rgba(255,255,255, .8);
+  color: rgba(0, 0, 0, 0.8);
 }
 
 .pokemon-btn{
