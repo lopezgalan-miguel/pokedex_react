@@ -1,6 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+
+import Pokescreen from '../Pokescreen/Pokescreen'
 
 export function Pokedex() {
+
+   const [error, setError] = useState(false);
+   const [ loading, setLoading ] = useState(true)
+   const [ pokemon, setPokemon ] = useState(null)
+   const RandomId = Math.floor(Math.random() * 806 + 1)
+   const [ pokemonID, setPokemonId ] = useState(RandomId)
+   // Solamente esta cargando mientras hacemos la petición,
+   // cuando esta se resuelve o fue un éxito u un error.
+   useEffect(() => {
+      fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonID}`)
+      .then(res => res.json())
+      .then(data => {
+         // Si todo esta cool, actualizamos el pokemón
+         // Y le indicamos que no hay error
+         console.log(data)
+         setPokemon(data)
+         setLoading(false)
+         setError(false)
+      })
+      .catch(err => {
+         setLoading(false)
+         setError(true)
+      })
+   }, [])
    return(
       <div className="pokedex">
       <div className="pokedex-left">
@@ -12,6 +38,7 @@ export function Pokedex() {
         </div>
         <div className="pokedex-screen-container">
           Set Pokedex Screen{/* <PokedexScreen /> */}
+          <Pokescreen />
         </div>
         <div className="pokedex-left-bottom">
           <div className="pokedex-left-bottom-lights">
