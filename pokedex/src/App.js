@@ -1,5 +1,5 @@
 
-import './styles/pokedex.css';
+import './styles/pokedex.scss';
 import Pokedex from './components/Pokedex/Pokedex';
 
 function App() {
