@@ -23,7 +23,6 @@ const Pokeform = ({ setPokemonId, setLoading, setError }) => {
         name="pokemon"
         value={pokemon}
         placeholder="Busca tu pokemon"
-        //Actualizas el valor del input cuando el usuario teclea
         onChange={e => setPokemon(e.target.value)}
         autoComplete="off"/>
       <input type="submit" className="pokemon-btn" value=""/>
