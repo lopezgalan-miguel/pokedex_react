@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import Pokescreen from '../Pokescreen/Pokescreen'
+import Pokeform from '../Pokeform/Pokeform';
 
 
 
@@ -27,7 +28,7 @@ export function Pokedex() {
          setLoading(false)
          setError(true)
       })
-   }, [])
+   }, [pokemonID])
    return(
       <div className="pokedex">
       <div className="pokedex-left">
@@ -50,7 +51,12 @@ export function Pokedex() {
             <div className="light is-green is-large" />
             <div className="light is-orange is-large" />
           </div>
-          Set Pokemon form{/* <PokemonForm /> */}
+          <Pokeform
+            setPokemonId={setPokemonId}
+            setLoading={setLoading}
+            setError={setError}
+            />
+
         </div>
       </div>
       <div className="pokedex-right-front" />
