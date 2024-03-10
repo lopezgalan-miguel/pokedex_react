@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
 
-const Pokeform = () => {
+const Pokeform = ({ setPokemonId, setLoading, setError }) => {
   const [ pokemon, setPokemon ] = useState('')
-
-  const handleSubmit = event => {
-    event.preventDefault()
-
+  const handleSubmit = e => {
+    e.preventDefault()
+    if(pokemon !== ''){
+      // Estara cargando por que hará una petición a la API
+      setError(true)
+      setLoading(true)
+      const pokemonID = window.isNaN(parseInt(pokemon)) ? pokemon.toLowerCase() : pokemon
+      setPokemonId(pokemonID)
+      setPokemon('')
+      return
+    }
+    setError(true)
   }
   return(
     <form className="pokemon-form" onSubmit={handleSubmit}>

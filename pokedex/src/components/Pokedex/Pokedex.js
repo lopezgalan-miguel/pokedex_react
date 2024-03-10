@@ -28,7 +28,7 @@ export function Pokedex() {
          setLoading(false)
          setError(true)
       })
-   }, [])
+   }, [pokemonID])
    return(
       <div className="pokedex">
       <div className="pokedex-left">
@@ -51,7 +51,12 @@ export function Pokedex() {
             <div className="light is-green is-large" />
             <div className="light is-orange is-large" />
           </div>
-            <Pokeform />
+          <Pokeform
+            setPokemonId={setPokemonId}
+            setLoading={setLoading}
+            setError={setError}
+            />
+
         </div>
       </div>
       <div className="pokedex-right-front" />
