@@ -12,18 +12,65 @@ function Stat({ item }){
 }
 
 const Pokescreen = ({ pokemon, loading, error }) => {
-  if(error) { //TODO: Create error component missigno image
-    return(
-      <div>
-        Error, intentelo de nuevo
-      </div>
-    )
-  }
+  console.log(pokemon);
+  console.log(loading);
+  console.log(error);
   if(loading) { //Error: Create loading component teletexto image
     return(
       <div> Cargando ...</div>
     )
   }
+  if(error) { //TODO Refactor at service: in error call, return this object
+    pokemon.name = 'Error, try again';
+    pokemon.stats = [
+      {
+        base_stat: 0,
+        stat: {
+          name: 'hp'
+        }
+      },
+      {
+        base_stat: 0,
+        stat: {
+          name: 'hp'
+        }
+      },
+      {
+        base_stat: 0,
+        stat: {
+          name: 'Attack'
+        }
+      },
+      {
+        base_stat: 0,
+        stat: {
+          name: 'Defense'
+        }
+      },
+      {
+        base_stat: 0,
+        stat: {
+          name: 'Special-Attack'
+        }
+      },
+      {
+        base_stat: 0,
+        stat: {
+          name: 'Special-Defense'
+        }
+      },
+      {
+        base_stat: 0,
+        stat: {
+          name: 'Speed'
+        }
+      }
+    ]
+    pokemon.sprites = {
+      front_default: '/assets/missigno.png'
+    }
+  }
+  
   return(
       <div className="pokedex-screen">
       <div className="pokemon-info">
