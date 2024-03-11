@@ -28,7 +28,7 @@ export function Pokedex() {
          setLoading(false)
          setError(true)
       })
-   }, [pokemonID])
+   }, [pokemonID]) 
    return(
       <div className="pokedex">
       <div className="pokedex-left">
