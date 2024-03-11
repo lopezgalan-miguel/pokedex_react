@@ -12,6 +12,7 @@ function Stat({ item }){
 }
 
 const Pokescreen = ({ pokemon, loading, error }) => {
+  console.log(pokemon)
   if(error) { //TODO: Create error component missigno image
     return(
       <div>
