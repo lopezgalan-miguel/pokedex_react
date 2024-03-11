@@ -1,6 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styles from './Pokescreen.module.scss';
+import React, { Component } from 'react';
 
 function Stat({ item }){
   return (
@@ -11,43 +9,46 @@ function Stat({ item }){
   )
 }
 
-const Pokescreen = ({ pokemon, loading, error }) => {
-  console.log(pokemon)
-  if(error) { //TODO: Create error component missigno image
-    return(
-      <div>
-        Error, intentelo de nuevo
-      </div>
-    )
+export default class Pokescreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      pokemon: this.props.pokemon,
+      loading: this.props.loading,
+      error: this.props.error
+    }
   }
-  if(loading) { //Error: Create loading component teletexto image
+  render() {
+    if(this.state.error) {
+      return(
+        <div>
+          Error, intentelo de nuevo
+        </div>
+      )
+    }
+    if(this.state.loading) {
+      return(
+        <div> Cargando ...</div>
+      )
+    }
     return(
-      <div> Cargando ...</div>
-    )
-  }
-  return(
       <div className="pokedex-screen">
-      <div className="pokemon-info">
-        <h2 className="pokemon-name">{pokemon?.name}</h2>
-        <img
-          className="pokemon-img"
-          src={pokemon?.sprites.front_default}
-          alt={pokemon?.name}
-        />
-        <ul className="pokemon-stats">
-        <ul className="pokemon-stats">
-          { pokemon?.stats.map(item => (
-            <Stat key={item.stat.name} item={item}/>
-          ))}
-        </ul>
-        </ul>
+        <div className="pokemon-info">
+          <h2 className="pokemon-name">{this.pokemon?.name}</h2>
+          <img
+            className="pokemon-img"
+            src={this.pokemon?.sprites.front_default}
+            alt={this.ºpokemon?.name}
+          />
+          <ul className="pokemon-stats">
+          <ul className="pokemon-stats">
+            { this.pokemon?.stats.map(item => (
+              <Stat key={item.stat.name} item={item}/>
+            ))}
+          </ul>
+          </ul>
+        </div>
       </div>
-    </div>
-  )
-};
-
-Pokescreen.propTypes = {};
-
-Pokescreen.defaultProps = {};
-
-export default Pokescreen;
+      )
+  }
+}
