@@ -1,68 +1,107 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Component } from 'react';
+import axios from 'axios';
 
 import Pokescreen from '../Pokescreen/Pokescreen'
 import Pokeform from '../Pokeform/Pokeform';
 
 
 
-export function Pokedex() {
+export default class Pokedex extends Component {
 
-   const [error, setError] = useState(false);
-   const [ loading, setLoading ] = useState(true)
-   const [ pokemon, setPokemon ] = useState(null)
-   const RandomId = Math.floor(Math.random() * 806 + 1)
-   const [ pokemonID, setPokemonId ] = useState(RandomId)
-   // Solamente esta cargando mientras hacemos la petición,
-   // cuando esta se resuelve o fue un éxito u un error.
-   useEffect(() => {
-      fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonID}`)
-      .then(res => res.json())
-      .then(data => {
-         // Si todo esta cool, actualizamos el pokemón
-         // Y le indicamos que no hay error
-         setPokemon(data)
-         setLoading(false)
-         setError(false)
-      })
-      .catch(err => {
-         setLoading(false)
-         setError(true)
-      })
-   }, [pokemonID])
-   return(
-      <div className="pokedex">
-      <div className="pokedex-left">
-        <div className="pokedex-left-top">
-            <div className={`light is-sky is-big ${loading && 'is-animated'}`}  />
-            <div className="light is-red" />
-            <div className="light is-yellow" />
-            <div className="light is-green" />
-        </div>
-        <div className="pokedex-screen-container">
-          <Pokescreen
-               pokemon={pokemon}
-               loading={loading}
-               error={error}
-            />
-        </div>
-        <div className="pokedex-left-bottom">
-          <div className="pokedex-left-bottom-lights">
-            <div className="light is-blue is-medium" />
-            <div className="light is-green is-large" />
-            <div className="light is-orange is-large" />
-          </div>
-          <Pokeform
-            setPokemonId={setPokemonId}
-            setLoading={setLoading}
-            setError={setError}
-            />
+   constructor(props) {
+      super(props);
+      this.state = {
+         pokemon: null,
+         error: false,
+         loading:false,
+         pokemonId: '1'
+      }
+   }
 
-        </div>
-      </div>
-      <div className="pokedex-right-front" />
-      <div className="pokedex-right-back" />
-    </div>
-   )
+   componentDidMount() {
+      this.loadPokedex();
+   }
+
+
+   loadPokedex() {
+      this.setState({ loading: true, error: false });
+      const url = `https://pokeapi.co/api/v2/pokemon/${this.state.pokemonId}`;
+      axios.get(url).then(res => {
+         if(res) {
+           this.setData(res);
+         } else {
+            this.setState({loading: false})
+         }
+      }, (error)=>  {
+         this.setState({error: true, loading: false}
+         )
+      })
+   }
+
+   setData(res) {
+      this.setState({ pokemon: res.data });
+      
+      this.setState({loading: false});
+   }
+   setPokemonId = (pokemonId) => {
+      this.setState({pokemonId});
+      setTimeout(() => {
+         this.loadPokedex();
+      }, 0);
+   }
+
+   setLoading = (loading) => {
+      this.setState({loading});
+   }
+
+   setError = (error) => {
+      this.setState({error});
+   }
+
+   render() {
+      if(this.state.pokemon) {
+         return (
+            <div className="pokedex">
+            <div className="pokedex-left">
+            <div className="pokedex-left-top">
+                  <div className={`light is-sky is-big ${this.state.loading && 'is-animated'}`}  />
+                  <div className="light is-red" />
+                  <div className="light is-yellow" />
+                  <div className="light is-green" />
+            </div>
+            <div className="pokedex-screen-container">
+                  <Pokescreen
+                     key={this.state.pokemon.id}
+                     pokemon={this.state.pokemon}
+                     loading={this.state.loading}
+                     error={this.state.error}
+                  />
+            </div>
+            <div className="pokedex-left-bottom">
+               <div className="pokedex-left-bottom-lights">
+                  <div className="light is-blue is-medium" />
+                  <div className="light is-green is-large" />
+                  <div className="light is-orange is-large" />
+               </div>
+               <Pokeform
+                  onSetPokemonId={this.setPokemonId}
+                  setLoading={this.setLoading}
+                  setError={this.setError}
+                  />
+   
+            </div>
+            </div>
+            <div className ="pokedex-right-front" />
+            <div className="pokedex-right-back" />
+            </div>
+         )
+      } else {
+         return(
+            <div>
+               Loading
+            </div>
+         )
+      }
+      }
 }
 
-export default Pokedex;
