@@ -8,43 +8,56 @@ import Pokeform from '../Pokeform/Pokeform';
 
 export default class Pokedex extends Component {
 
+   constructor(props) {
+      super(props);
+      this.state = {
+         pokemon: null,
+         error: false,
+         loading:false,
+         pokemonId: '1'
+      }
+   }
+
    componentDidMount() {
-      this.loadPokedex(1);
+      this.loadPokedex();
    }
 
-   state = {
-      pokemon: null,
-      error: false,
-      loading:false,
-      currentPokemonId: '0'
-   }
 
-   loadPokedex(pokemonId) {
-      this.setState({
-         currentPokemonId: pokemonId,
-         loading: true
-      })
-      const url = `https://pokeapi.co/api/v2/pokemon/${pokemonId}`;
+   loadPokedex() {
+      this.setState({ loading: true, error: false });
+      const url = `https://pokeapi.co/api/v2/pokemon/${this.state.pokemonId}`;
       axios.get(url).then(res => {
-         this.setState({
-            pokemon: res?.data || null,
-            error: false,
-            loading: false,
-         });
+         if(res) {
+           this.setData(res);
+         } else {
+            this.setState({loading: false})
+         }
+      }, (error)=>  {
+         this.setState({error: true, loading: false}
+         )
       })
    }
 
-   setPokemonId(pokemonId) {
-      console.log(pokemonId);
+   setData(res) {
+      this.setState({ pokemon: res.data });
+      
+      this.setState({loading: false});
+   }
+   setPokemonId = (pokemonId) => {
+      this.setState({pokemonId});
+      setTimeout(() => {
+         this.loadPokedex();
+      }, 0);
    }
 
-   setLoading(loading) {
-      console.log(loading)
+   setLoading = (loading) => {
+      this.setState({loading});
    }
 
-   setError(error) {
-      console.log(error)
+   setError = (error) => {
+      this.setState({error});
    }
+
    render() {
       if(this.state.pokemon) {
          return (
@@ -58,6 +71,7 @@ export default class Pokedex extends Component {
             </div>
             <div className="pokedex-screen-container">
                   <Pokescreen
+                     key={this.state.pokemon.id}
                      pokemon={this.state.pokemon}
                      loading={this.state.loading}
                      error={this.state.error}
@@ -70,15 +84,14 @@ export default class Pokedex extends Component {
                   <div className="light is-orange is-large" />
                </div>
                <Pokeform
-                  setPokemonId={this.setPokemonId(1)}
-                  setLoading={this.setLoading(false)}
-                  setError={this.setError(false)}
+                  onSetPokemonId={this.setPokemonId}
+                  setLoading={this.setLoading}
+                  setError={this.setError}
                   />
    
             </div>
             </div>
-            <div className
-            ="pokedex-right-front" />
+            <div className ="pokedex-right-front" />
             <div className="pokedex-right-back" />
             </div>
          )

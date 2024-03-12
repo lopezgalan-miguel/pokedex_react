@@ -1,37 +1,46 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 
-const Pokeform = ({ setPokemonId, setLoading, setError }) => {
-  const [ pokemon, setPokemon ] = useState('')
-  const handleSubmit = e => {
+export default class Pokeform extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentPokemonId: ''
+    }
+  }
+
+  handleSubmit = e => {
     e.preventDefault()
-    if(pokemon !== ''){
-      // Estara cargando por que hará una petición a la API
-      setError(true)
-      setLoading(true)
-      const pokemonID = window.isNaN(parseInt(pokemon)) ? pokemon.toLowerCase() : pokemon
-      setPokemonId(pokemonID)
-      setPokemon('')
+    if(this.state.currentPokemonId !== ''){
+      this.props.onSetPokemonId(this.state.currentPokemonId)
       return
     }
-    setError(true)
   }
-  return(
-    <form className="pokemon-form" onSubmit={handleSubmit}>
-      <input
-        className="pokemon-input"
-        type="text"
-        name="pokemon"
-        value={pokemon}
-        placeholder="Busca tu pokemon"
-        onChange={e => setPokemon(e.target.value)}
-        autoComplete="off"/>
-      <input type="submit" className="pokemon-btn" value=""/>
-    </form>
-  )
-};
 
-Pokeform.propTypes = {};
+  setPokemon = (event) => {
+    this.setState({currentPokemonId: event})
+  }
 
-Pokeform.defaultProps = {};
+  setError = (error) => {
+    this.props.setError(error);
+  }
 
-export default Pokeform;
+  setLoading = (loading) => {
+    this.props.setLoading(loading);
+  }
+
+  render() {
+    return(
+      <form className="pokemon-form" onSubmit={this.handleSubmit}>
+        <input
+          className="pokemon-input"
+          type="text"
+          name="pokemon"
+          placeholder="Busca tu pokemon"
+          onChange={event => this.setPokemon(event.target.value)}
+          autoComplete="off"/>
+        <input type="submit" className="pokemon-btn" value=""/>
+      </form>
+    )
+  }
+}

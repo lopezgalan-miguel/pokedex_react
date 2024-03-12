@@ -34,15 +34,15 @@ export default class Pokescreen extends Component {
     return(
       <div className="pokedex-screen">
         <div className="pokemon-info">
-          <h2 className="pokemon-name">{this.pokemon?.name}</h2>
+          <h2 className="pokemon-name">{this.state.pokemon.name}</h2>
           <img
             className="pokemon-img"
-            src={this.pokemon?.sprites.front_default}
-            alt={this.ºpokemon?.name}
+            src={this.state.pokemon.sprites.front_default}
+            alt={this.state.pokemon.name}
           />
           <ul className="pokemon-stats">
           <ul className="pokemon-stats">
-            { this.pokemon?.stats.map(item => (
+            { this.state.pokemon.stats.map(item => (
               <Stat key={item.stat.name} item={item}/>
             ))}
           </ul>
