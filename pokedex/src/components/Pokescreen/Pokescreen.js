@@ -19,61 +19,6 @@ export default class Pokescreen extends Component {
     }
   }
   render() {
-    if(this.state.error) {
-      const pokemon = {
-        id: -1,
-        name: 'Error, try again',
-        stats: [
-          {
-            base_stat: 0,
-            stat: {
-              name: 'hp'
-            }
-          },
-          {
-            base_stat: 0,
-            stat: {
-              name: 'hp'
-            }
-          },
-          {
-            base_stat: 0,
-            stat: {
-              name: 'Attack'
-            }
-          },
-          {
-            base_stat: 0,
-            stat: {
-              name: 'Defense'
-            }
-          },
-          {
-            base_stat: 0,
-            stat: {
-              name: 'Special-Attack'
-            }
-          },
-          {
-            base_stat: 0,
-            stat: {
-              name: 'Special-Defense'
-            }
-          },
-          {
-            base_stat: 0,
-            stat: {
-              name: 'Speed'
-            }
-          }
-        ],
-        sprites: {
-          front_default: '/assets/missigno.png'
-        }
-      }
-      this.setState(pokemon);
-      console.log('im here')
-    }
     if(this.state.loading) {
       return(
         <div> Cargando ...</div>

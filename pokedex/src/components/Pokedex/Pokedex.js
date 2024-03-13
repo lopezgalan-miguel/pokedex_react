@@ -34,7 +34,7 @@ export default class Pokedex extends Component {
          }
       }, ()=>  {
          this.setState({error: true, loading: false});
-         // this.setErrorPokemon();
+         this.setErrorPokemon();
       })
    }
 
@@ -50,6 +50,61 @@ export default class Pokedex extends Component {
       }, 0);
    }
 
+   setErrorPokemon() {
+      const pokemon = {
+         id: -1,
+         name: 'Error, try again',
+         stats: [
+           {
+             base_stat: 0,
+             stat: {
+               name: 'hp'
+             }
+           },
+           {
+             base_stat: 0,
+             stat: {
+               name: 'hp'
+             }
+           },
+           {
+             base_stat: 0,
+             stat: {
+               name: 'Attack'
+             }
+           },
+           {
+             base_stat: 0,
+             stat: {
+               name: 'Defense'
+             }
+           },
+           {
+             base_stat: 0,
+             stat: {
+               name: 'Special-Attack'
+             }
+           },
+           {
+             base_stat: 0,
+             stat: {
+               name: 'Special-Defense'
+             }
+           },
+           {
+             base_stat: 0,
+             stat: {
+               name: 'Speed'
+             }
+           }
+         ],
+         sprites: {
+           front_default: '/assets/missigno.png'
+         }
+      }
+      this.setState({pokemon});
+      console.log(this.state.pokemon);
+   }
    setLoading = (loading) => {
       this.setState({loading});
    }
