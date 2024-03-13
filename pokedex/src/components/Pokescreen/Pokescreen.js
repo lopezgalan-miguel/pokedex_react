@@ -1,6 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styles from './Pokescreen.module.scss';
+import React, { Component } from 'react';
 
 function Stat({ item }){
   return (
@@ -11,89 +9,94 @@ function Stat({ item }){
   )
 }
 
-const Pokescreen = ({ pokemon, loading, error }) => {
-  console.log(pokemon);
-  console.log(loading);
-  console.log(error);
-  if(loading) { //Error: Create loading component teletexto image
-    return(
-      <div> Cargando ...</div>
-    )
-  }
-  if(error) { //TODO Refactor at service: in error call, return this object
-    pokemon.name = 'Error, try again';
-    pokemon.stats = [
-      {
-        base_stat: 0,
-        stat: {
-          name: 'hp'
-        }
-      },
-      {
-        base_stat: 0,
-        stat: {
-          name: 'hp'
-        }
-      },
-      {
-        base_stat: 0,
-        stat: {
-          name: 'Attack'
-        }
-      },
-      {
-        base_stat: 0,
-        stat: {
-          name: 'Defense'
-        }
-      },
-      {
-        base_stat: 0,
-        stat: {
-          name: 'Special-Attack'
-        }
-      },
-      {
-        base_stat: 0,
-        stat: {
-          name: 'Special-Defense'
-        }
-      },
-      {
-        base_stat: 0,
-        stat: {
-          name: 'Speed'
-        }
-      }
-    ]
-    pokemon.sprites = {
-      front_default: '/assets/missigno.png'
+export default class Pokescreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      pokemon: this.props.pokemon,
+      loading: this.props.loading,
+      error: this.props.error
     }
   }
-  
-  return(
+  render() {
+    if(this.state.error) {
+      const pokemon = {
+        id: -1,
+        name: 'Error, try again',
+        stats: [
+          {
+            base_stat: 0,
+            stat: {
+              name: 'hp'
+            }
+          },
+          {
+            base_stat: 0,
+            stat: {
+              name: 'hp'
+            }
+          },
+          {
+            base_stat: 0,
+            stat: {
+              name: 'Attack'
+            }
+          },
+          {
+            base_stat: 0,
+            stat: {
+              name: 'Defense'
+            }
+          },
+          {
+            base_stat: 0,
+            stat: {
+              name: 'Special-Attack'
+            }
+          },
+          {
+            base_stat: 0,
+            stat: {
+              name: 'Special-Defense'
+            }
+          },
+          {
+            base_stat: 0,
+            stat: {
+              name: 'Speed'
+            }
+          }
+        ],
+        sprites: {
+          front_default: '/assets/missigno.png'
+        }
+      }
+      this.setState(pokemon);
+      console.log('im here')
+    }
+    if(this.state.loading) {
+      return(
+        <div> Cargando ...</div>
+      )
+    }
+    return(
       <div className="pokedex-screen">
-      <div className="pokemon-info">
-        <h2 className="pokemon-name">{pokemon?.name}</h2>
-        <img
-          className="pokemon-img"
-          src={pokemon?.sprites.front_default}
-          alt={pokemon?.name}
-        />
-        <ul className="pokemon-stats">
-        <ul className="pokemon-stats">
-          { pokemon?.stats.map(item => (
-            <Stat key={item.stat.name} item={item}/>
-          ))}
-        </ul>
-        </ul>
+        <div className="pokemon-info">
+          <h2 className="pokemon-name">{this.state.pokemon.name}</h2>
+          <img
+            className="pokemon-img"
+            src={this.state.pokemon.sprites.front_default}
+            alt={this.state.pokemon.name}
+          />
+          <ul className="pokemon-stats">
+          <ul className="pokemon-stats">
+            { this.state.pokemon.stats.map(item => (
+              <Stat key={item.stat.name} item={item}/>
+            ))}
+          </ul>
+          </ul>
+        </div>
       </div>
-    </div>
-  )
-};
-
-Pokescreen.propTypes = {};
-
-Pokescreen.defaultProps = {};
-
-export default Pokescreen;
+      )
+  }
+}
