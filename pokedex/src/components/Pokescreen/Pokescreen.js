@@ -19,13 +19,6 @@ export default class Pokescreen extends Component {
     }
   }
   render() {
-    if(this.state.error) {
-      return(
-        <div>
-          Error, intentelo de nuevo
-        </div>
-      )
-    }
     if(this.state.loading) {
       return(
         <div> Cargando ...</div>
